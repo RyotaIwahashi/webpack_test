@@ -25,6 +25,13 @@ const config = () => {
             // preset-envは、ES5標準と互換性のあるコードにトランスパイルするために必要なもの
             presets: ['@babel/preset-env', '@babel/preset-react'],
           }
+        },
+        // css を使用する場合は以下が必要
+        // ビルド時にcssをロードするcss-loaderと、スタイル要素を生成してアプリケーションに挿入するstyle-loader
+        // この構成の場合、main.js にcss定義が実装されるため、index.htmlでcssを個別にインポートする必要はない。
+        {
+          test: /\.css$/,
+          use: ['style-loader', 'css-loader']
         }
       ]
     }
