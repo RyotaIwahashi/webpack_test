@@ -8,6 +8,13 @@ const config = () => {
       path: path.resolve(__dirname, 'build'),
       filename: 'main.js'
     },
+    // npm start コマンドで port3000 で開発サーバーを起動できるように。
+    // dev-server を使用する場合、コードは毎回 build/ にバンドル(ビルド)されるわけではなく、バンドルの結果はメモリ内にのみ存在する。
+    devServer: {
+      static: path.resolve(__dirname, 'build'),
+      compress: true,
+      port: 3000,
+    },
     module: {
       rules: [
         // test プロパティは、ローダーが.jsで終わる名前を持つファイル用であることを指定
