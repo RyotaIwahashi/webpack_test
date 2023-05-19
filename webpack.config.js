@@ -17,9 +17,13 @@ const config = () => {
         // npm install @babel/core babel-loader @babel/preset-react --save-dev
         {
           test: /\.js$/,
+          // babel はトランスパイラ。JSXで書いたプログラムを、Reactを使うJSに変換する。
+          // ES6やES7で導入された最新の機能はほとんどのブラウザーでサポートされていないため、
+          // ES5標準を実装するJSのバージョンに変換される。
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-react'],
+            // preset-envは、ES5標準と互換性のあるコードにトランスパイルするために必要なもの
+            presets: ['@babel/preset-env', '@babel/preset-react'],
           }
         }
       ]
