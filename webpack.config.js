@@ -1,6 +1,16 @@
 const path = require('path')
+const webpack = require('webpack')
 
-const config = () => {
+const config = (env, argv) => {
+  console.log('argv.mode:', argv.mode) // --mode で定義されたモードを取得する
+
+  // 本番モードではflyにデプロイしてあるバックエンドを見るように、
+  // 開発モードではlocalhostのjson-serverを見るようにする。(要 npm run server)
+  // npx static-server でバンドルされているアプリケーションの製品バージョンをローカルで検査できる。
+  const backend_url = argv.mode === 'production'
+    ? 'https://late-rain-8593.fly.dev/api/notes'
+    : 'http://localhost:3001/notes'
+
   return {
     entry: './src/index.js',
     output: {
@@ -44,7 +54,14 @@ const config = () => {
           use: ['style-loader', 'css-loader']
         }
       ]
-    }
+    },
+    // Webpack の DefinePlugin を使用して、バンドルされたコードで使用できるグローバルなデフォルト定数を定義することもできる。
+    // コードがバンドルされている環境に応じて異なる値を取得する新しいグローバル定数BACKEND_URLを定義。
+    plugins: [
+      new webpack.DefinePlugin({
+        BACKEND_URL: JSON.stringify(backend_url)
+      })
+    ]
   }
 }
 
