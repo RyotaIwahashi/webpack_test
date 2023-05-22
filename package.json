@@ -4,7 +4,8 @@
   "description": "practising webpack",
   "scripts": {
     "build": "webpack --mode=production",
-    "start": "webpack serve --mode=development"
+    "start": "webpack serve --mode=development",
+    "server": "json-server -p3001 --watch db.json"
   },
   "license": "MIT",
   "devDependencies": {
